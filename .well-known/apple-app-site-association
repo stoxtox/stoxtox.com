@@ -1,0 +1,26 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "96CZ7V5TC6.com.stoxtox.app"
+        ],
+        "components": [
+          {
+            "/": "/plaid/oauth",
+            "comment": "Plaid OAuth return"
+          },
+          {
+            "/": "/plaid/oauth/*"
+          }
+        ],
+        "appID": "96CZ7V5TC6.com.stoxtox.app",
+        "paths": [
+          "/plaid/oauth",
+          "/plaid/oauth/*"
+        ]
+      }
+    ],
+    "apps": []
+  }
+}
