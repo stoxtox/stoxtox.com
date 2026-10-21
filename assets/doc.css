@@ -1,0 +1,24 @@
+/* Privacy, Terms and the small pages: the landing page's tokens and fonts, set for reading. */
+@font-face{font-family:"Jakarta";src:url(/assets/fonts/PlusJakartaSans.ttf) format("truetype");font-weight:200 800;font-display:swap}
+@font-face{font-family:"Spline Mono";src:url(/assets/fonts/SplineSansMono.ttf) format("truetype");font-weight:300 700;font-display:swap}
+:root{--paper:#0C0D0E;--surface:#16181A;--line:#2A2D30;--ink:#F2F2EF;--muted:#9A9E9A;--faint:#6B6F6B;--brass:#D9AE52;color-scheme:dark}
+@media (prefers-color-scheme:light){:root{--paper:#F5F5F2;--surface:#FFFFFF;--line:#E0E1DC;--ink:#121314;--muted:#5E615C;--faint:#8C8F89;--brass:#7D5F17;color-scheme:light}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16.5px/1.7 "Jakarta",-apple-system,system-ui,sans-serif}
+main{max-width:720px;margin:0 auto;padding:28px 20px 88px}
+header{display:flex;align-items:center;justify-content:space-between;height:56px;margin-bottom:48px}
+header .brand{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;font-weight:700;font-size:18px;letter-spacing:-.02em}
+header .brand img{width:26px;height:26px;border-radius:7px}
+header nav a{font-weight:500;font-size:14px;color:var(--muted);margin-left:20px;text-decoration:none}
+header nav a:hover{color:var(--ink)}
+h1{font-size:clamp(32px,5vw,44px);line-height:1.08;letter-spacing:-.035em;margin:0 0 12px}
+h2{font-size:20px;margin:44px 0 8px;letter-spacing:-.015em}
+p,li{color:var(--ink)}
+a{color:var(--brass);text-underline-offset:3px}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;display:block;overflow-x:auto}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600}
+code{font-family:"Spline Mono",ui-monospace,monospace;font-size:.9em}
+footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:6px}

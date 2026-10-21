@@ -1,26 +1,402 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Stoxtox</title><meta name="description" content="Stoxtox: your net worth and investments in one place."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"><style>
-:root{--paper:#0d0e10;--ink:#f1f0ec;--muted:#8b8c90;--line:#26272b;--gold:#c9a45c}
-@media (prefers-color-scheme: light){:root{--paper:#fbfaf7;--ink:#151619;--muted:#5f6066;--line:#e4e2dc;--gold:#9a7a35}}
-*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 "Plus Jakarta Sans",-apple-system,system-ui,sans-serif}
-main{max-width:720px;margin:0 auto;padding:48px 20px 80px}
-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:40px}
-header a{color:var(--ink);text-decoration:none;font-weight:700;font-size:20px;letter-spacing:-.02em}
-header nav a{font-weight:500;font-size:14px;color:var(--muted);margin-left:18px}
-h1{font-size:32px;line-height:1.2;letter-spacing:-.02em;margin:0 0 8px}
-h2{font-size:20px;margin:40px 0 8px;letter-spacing:-.01em}
-p,li{color:var(--ink)}a{color:var(--gold)}
-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;display:block;overflow-x:auto}
-th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
-th{color:var(--muted);font-weight:600}
-footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
-</style></head>
-<body><main>
-<header><a href="/">Stoxtox</a><nav><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav></header>
-<h1>All your money, one number.</h1>
-<p>Stoxtox shows your net worth and investments across every account you have, in one place, on iPhone. It's read-only: it can never move your money.</p>
-<p><a href="/privacy/">Privacy Policy</a> · <a href="/terms/">Terms of Use</a> · <a href="mailto:harshpatel4395@gmail.com">Contact</a></p>
-<footer>&copy; 2026 Stoxtox LLC. Stoxtox is read-only and does not give investment advice.</footer>
-</main></body></html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stoxtox: every investment account, one number</title>
+<meta name="description" content="Stoxtox for iPhone brings your brokerage, retirement and crypto accounts together, priced live and added up in your own currency. Read-only. Connected through Plaid.">
+<meta name="theme-color" content="#0C0D0E" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F5F5F2" media="(prefers-color-scheme: light)">
+<meta property="og:title" content="Stoxtox">
+<meta property="og:description" content="Every investment account, one number. Read-only, priced live, in your own currency.">
+<meta property="og:url" content="https://stoxtox.com/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://stoxtox.com/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/mark-180.png">
+<link rel="preload" href="/assets/fonts/PlusJakartaSans.ttf" as="font" type="font/ttf" crossorigin>
+<script>document.documentElement.classList.add('js')</script>
+<style>
+@font-face{font-family:"Jakarta";src:url(/assets/fonts/PlusJakartaSans.ttf) format("truetype");font-weight:200 800;font-display:swap}
+@font-face{font-family:"Spline Mono";src:url(/assets/fonts/SplineSansMono.ttf) format("truetype");font-weight:300 700;font-display:swap}
+
+/* The app's own tokens (MeridianKit): paper, ink, brass, and market green and red only where a number moves. */
+:root{
+  --paper:#0C0D0E;--surface:#16181A;--sunk:#1F2124;--line:#2A2D30;--line-strong:#3A3E42;
+  --ink:#F2F2EF;--muted:#9A9E9A;--faint:#6B6F6B;
+  --brass:#D9AE52;--brass-fill:#D9AE52;--brass-soft:#2B2414;--on-brass:#1A1405;
+  --up:#3DD68C;--down:#FF6B5E;
+  --phone-shadow:0 50px 90px -40px rgba(0,0,0,.85);
+  --sans:"Jakarta",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  --mono:"Spline Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --gutter:24px;--max:1160px;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme:light){:root{
+  --paper:#F5F5F2;--surface:#FFFFFF;--sunk:#ECEDEA;--line:#E0E1DC;--line-strong:#C9CBC5;
+  --ink:#121314;--muted:#5E615C;--faint:#8C8F89;
+  --brass:#7D5F17;--brass-fill:#D4A647;--brass-soft:#F3EBD8;
+  --up:#0D7444;--down:#BE2D26;
+  --phone-shadow:0 50px 80px -45px rgba(20,20,10,.45);
+  color-scheme:light;
+}}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.6 var(--sans);overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:6px}
+.skip{position:absolute;left:-999px;top:12px}.skip:focus{left:12px;z-index:9;background:var(--surface);padding:8px 12px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+.mono{font-family:var(--mono);letter-spacing:.02em}
+.muted{color:var(--muted)}
+
+/* Nav */
+.nav{display:flex;align-items:center;justify-content:space-between;height:76px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:19px;letter-spacing:-.02em}
+.brand img{width:30px;height:30px;border-radius:8px}
+.nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0}
+.nav ul a{text-decoration:none;color:var(--muted);font-size:15px;font-weight:500}
+.nav ul a:hover{color:var(--ink)}
+
+/* Type */
+h1,h2,h3{margin:0;font-weight:700;letter-spacing:-.035em;line-height:1.02}
+h1{font-size:clamp(46px,7.4vw,92px);letter-spacing:-.045em;line-height:.96}
+h1 .then{color:var(--faint);display:block}
+h2{font-size:clamp(34px,4.6vw,58px)}
+h3{font-size:20px;letter-spacing:-.015em;line-height:1.25}
+.lede{font-size:clamp(18px,1.6vw,20px);color:var(--muted);max-width:33em;margin:28px 0 0}
+.label{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 20px}
+
+/* Buttons: brass with the app's shine */
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:18px 22px;margin-top:36px}
+.brass{position:relative;overflow:hidden;isolation:isolate;display:inline-flex;align-items:center;gap:10px;height:54px;padding:0 26px;border-radius:15px;
+  background:var(--brass-fill);color:var(--on-brass);font:650 16px/1 var(--sans);text-decoration:none;letter-spacing:-.005em;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 10px 28px -8px rgba(217,174,82,.45)}
+.brass::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(255,255,255,.32),rgba(255,255,255,0) 50%,rgba(0,0,0,.08))}
+.brass::after{content:"";position:absolute;top:-60%;bottom:-60%;width:70px;left:-90px;z-index:-1;transform:rotate(20deg);
+  background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.6),rgba(255,255,255,0));animation:shine 3.6s cubic-bezier(.45,0,.25,1) infinite}
+@keyframes shine{0%{left:-90px}30%,100%{left:calc(100% + 90px)}}
+.brass:active{transform:scale(.98)}
+.quiet{color:var(--muted);font-size:15px;text-decoration:underline;text-decoration-color:var(--line-strong);text-underline-offset:5px}
+.quiet:hover{color:var(--ink)}
+
+/* Phone */
+.phone{position:relative;width:100%;max-width:330px;padding:11px;border-radius:58px;
+  background:linear-gradient(160deg,#34363a,#141517 40%,#0d0e10);box-shadow:inset 0 0 0 1px rgba(255,255,255,.09),inset 0 0 0 3px #050506,var(--phone-shadow)}
+.phone img{width:100%;height:auto;border-radius:47px;background:#0C0D0E}
+.phone::before{content:"";position:absolute;top:22px;left:50%;width:31%;height:30px;transform:translateX(-50%);background:#000;border-radius:20px;z-index:1}
+figure{margin:0}
+figcaption{margin-top:18px;font:400 12px/1.4 var(--mono);color:var(--faint);letter-spacing:.04em;text-align:center}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:48px;align-items:center;padding:56px 0 40px}
+.hero figure{justify-self:end;width:100%;max-width:330px}
+.facts{display:flex;flex-wrap:wrap;gap:0;margin-top:56px;border-top:1px solid var(--line)}
+.facts div{padding:18px 28px 0 0;margin-right:28px;border-right:1px solid var(--line)}
+.facts div:last-child{border:0;margin:0}
+.facts dt{font:500 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.facts dd{margin:8px 0 0;font-weight:600;font-size:16px}
+
+/* Sections */
+section{padding:120px 0;border-top:1px solid var(--line)}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:72px;align-items:center}
+.split.flip > :first-child{order:2}
+.copy p{color:var(--muted);font-size:18px;max-width:30em;margin:24px 0 0}
+.copy p strong{color:var(--ink);font-weight:600}
+.phones{display:flex;gap:28px;justify-content:center;align-items:flex-start}
+.phones figure{width:100%;max-width:300px}
+.phones figure:nth-child(2){margin-top:64px}
+
+/* Two ways in */
+.ways{margin-top:44px;display:grid;gap:0;border-top:1px solid var(--line)}
+.way{display:grid;grid-template-columns:44px 1fr;gap:18px;padding:26px 0;border-bottom:1px solid var(--line)}
+.way .n{font:500 13px/1.9 var(--mono);color:var(--brass)}
+.way p{margin:8px 0 0;font-size:16px;color:var(--muted)}
+.countries{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px;padding:0;list-style:none}
+.countries li{display:inline-flex;align-items:center;gap:9px;height:38px;padding:0 14px;border:1px solid var(--line-strong);border-radius:12px;font-size:14px;font-weight:500}
+.countries li span{font:500 11px/1 var(--mono);color:var(--muted);letter-spacing:.06em}
+.countries li.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.countries li.on span{color:var(--paper);opacity:.7}
+
+/* Ledger */
+.ledger{width:100%;border-collapse:collapse;margin-top:40px;font-size:15px}
+.ledger td{padding:15px 0;border-bottom:1px solid var(--line);vertical-align:baseline}
+.ledger td:nth-child(2){font:500 12px var(--mono);color:var(--faint);letter-spacing:.06em;padding:0 16px}
+.ledger td:last-child{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.ledger small{display:block;font-size:13px;color:var(--muted);font-weight:400}
+.ledger tr.total td{border-bottom:0;border-top:1px solid var(--line-strong);padding-top:18px;font-size:17px}
+.ledger tr.total td:first-child{font-weight:700}
+
+/* Privacy */
+.privacy{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:72px;align-items:start}
+.figure{margin-top:44px;padding:30px 30px 26px;border:1px solid var(--line);border-radius:24px;background:var(--surface)}
+.figure .top{display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:14px}
+.eye{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:12px;border:1px solid var(--line-strong);background:transparent;color:var(--ink);cursor:pointer}
+.eye svg{width:20px;height:20px}
+.eye .off{display:none}.figure.hidden .eye .on{display:none}.figure.hidden .eye .off{display:block}
+.amount{margin-top:14px;font-weight:700;letter-spacing:-.045em;font-size:clamp(46px,6vw,72px);line-height:1;font-variant-numeric:tabular-nums;transition:filter .35s ease,opacity .35s ease}
+.amount .sym,.amount .cents{color:var(--muted);font-size:.5em;vertical-align:.62em;letter-spacing:-.02em}
+.amount .sym{margin-right:2px}
+.figure .chg{margin-top:12px;color:var(--up);font-weight:600;font-variant-numeric:tabular-nums;transition:filter .35s ease}
+.figure .chg span{color:var(--muted);font-weight:400;margin-left:6px}
+.figure.hidden .amount,.figure.hidden .chg{filter:blur(13px);opacity:.55}
+.figure .hint{margin-top:22px;padding-top:16px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+.promises{margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.promises li{padding:24px 0;border-bottom:1px solid var(--line)}
+.promises p{margin:6px 0 0;color:var(--muted);font-size:16px}
+
+/* Close */
+.close{text-align:center;padding:140px 0 120px}
+.close h2{font-size:clamp(40px,6vw,76px)}
+.close .actions{justify-content:center}
+.close img{width:72px;height:72px;border-radius:18px;margin:0 auto 34px;box-shadow:0 20px 40px -18px rgba(217,174,82,.5)}
+
+footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);font-size:14px}
+footer .row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px 32px}
+footer nav{display:flex;gap:22px}
+footer nav a{text-decoration:none}footer nav a:hover{color:var(--ink)}
+footer .fine{margin-top:22px;font-size:13px;color:var(--faint);max-width:52em}
+footer .fine a{color:var(--muted)}
+
+/* Motion: things settle in once as they arrive. Nothing moves with Reduce Motion. */
+.js .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+.js .reveal.in{opacity:1;transform:none}
+.js .rise{animation:rise 1.1s cubic-bezier(.16,1,.3,1) .15s both}
+@keyframes rise{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.js .reveal{opacity:1;transform:none;transition:none}.js .rise{animation:none}.brass::after{animation:none;display:none}.amount,.figure .chg{transition:none}}
+
+/* Phones and tablets */
+@media (max-width:900px){
+  .hero,.split,.privacy{grid-template-columns:1fr;gap:56px}
+  .split.flip > :first-child{order:0}
+  .hero{padding-top:28px}
+  .hero figure{justify-self:center;max-width:300px}
+  section{padding:88px 0}
+  .phones figure{max-width:250px}
+}
+@media (max-width:560px){
+  :root{--gutter:16px}
+  .nav ul li:not(:last-child){display:none}
+  .facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:44px}
+  .facts div{padding:16px 12px 0 0;margin:0 12px 0 0}
+  .facts div:last-child{margin:0}
+  .facts dd{font-size:14.5px}
+  .phones{gap:14px}
+  .phones figure:nth-child(2){margin-top:40px}
+  .phone{padding:7px;border-radius:40px}.phone img{border-radius:33px}.phone::before{top:15px;height:20px}
+  .ledger td:nth-child(2){display:none}
+  .figure{padding:24px 22px 20px}
+  .close{padding:100px 0 88px}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="wrap">
+  <header class="nav">
+    <a class="brand" href="/" aria-label="Stoxtox home"><img src="/assets/mark.svg" alt="" width="30" height="30">Stoxtox</a>
+    <ul>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#privacy">Privacy</a></li>
+      <li><a href="mailto:co-founders@stoxtox.com">Contact</a></li>
+    </ul>
+  </header>
+
+  <main id="main">
+    <div class="hero">
+      <div>
+        <h1>Every brokerage account. <span class="then">One&nbsp;number.</span></h1>
+        <p class="lede">Stoxtox brings your brokerage, retirement and crypto accounts onto one screen, priced live and added up in your own currency. It reads what you own. It never touches your money.</p>
+        <div class="actions">
+          <a class="brass" href="mailto:co-founders@stoxtox.com?subject=Stoxtox%20early%20access">Get early access</a>
+          <span class="quiet" style="text-decoration:none">Coming soon to iPhone</span>
+        </div>
+        <dl class="facts">
+          <div><dt>Access</dt><dd>Read-only</dd></div>
+          <div><dt>Prices</dt><dd>Live, all day</dd></div>
+          <div><dt>Countries</dt><dd>8 and counting</dd></div>
+        </dl>
+      </div>
+      <figure class="rise">
+        <div class="phone">
+          <picture>
+            <source srcset="/assets/app/home-light.webp" media="(prefers-color-scheme: light)">
+            <img src="/assets/app/home.webp" width="960" height="2087" alt="Stoxtox Home: net worth across every account, up today, with Tesla, Tata Consultancy and Ethereum moving, a watchlist, and accounts below.">
+          </picture>
+        </div>
+        <figcaption>Home, with a demo portfolio</figcaption>
+      </figure>
+    </div>
+
+    <section id="how">
+      <div class="split flip">
+        <div class="copy reveal">
+          <p class="label">Getting your accounts in</p>
+          <h2>Connect it, or type it in.</h2>
+          <div class="ways">
+            <div class="way">
+              <span class="n">01</span>
+              <div>
+                <h3>Connect your broker</h3>
+                <p>In the US, sign in to your broker on Plaid&rsquo;s secure screen. Robinhood, Vanguard, E*TRADE, Merrill and thousands more. Holdings and balances keep themselves up to date.</p>
+              </div>
+            </div>
+            <div class="way">
+              <span class="n">02</span>
+              <div>
+                <h3>Add holdings yourself</h3>
+                <p>Anywhere else, name the account and add what you own: Zerodha in India, Hargreaves Lansdown in the UK, Wealthsimple in Canada. Prices still move live.</p>
+              </div>
+            </div>
+          </div>
+          <ul class="countries" aria-label="Countries Stoxtox supports">
+            <li class="on"><span>US</span>United States</li>
+            <li><span>IN</span>India</li>
+            <li><span>GB</span>United Kingdom</li>
+            <li><span>CA</span>Canada</li>
+            <li><span>EU</span>Europe</li>
+            <li><span>AU</span>Australia</li>
+            <li><span>SG</span>Singapore</li>
+            <li><span>AE</span>UAE</li>
+          </ul>
+        </div>
+        <div class="phones reveal">
+          <figure>
+            <div class="phone"><img src="/assets/app/add.webp" width="960" height="2087" loading="lazy" alt="Add investments: pick the country, then connect your broker through Plaid or add holdings yourself."></div>
+            <figcaption>Add investments</figcaption>
+          </figure>
+          <figure>
+            <div class="phone"><img src="/assets/app/account.webp" width="960" height="2087" loading="lazy" alt="A Fidelity brokerage account worth $55,084, up $593 today, with a total return of $24,383, holding VOO, Apple, NVIDIA and Microsoft."></div>
+            <figcaption>A connected account</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="split">
+        <div class="copy reveal">
+          <p class="label">Every currency</p>
+          <h2>Dollars and rupees, added up properly.</h2>
+          <p>Each account keeps its own currency. Your total converts at today&rsquo;s exchange rates, so a demat account in Mumbai and a brokerage in Boston end up in <strong>one number</strong>, in the currency you think in.</p>
+          <table class="ledger" aria-label="An example of accounts in two currencies added up in dollars">
+            <tr><td>Fidelity<small>2 accounts, connected</small></td><td>USD</td><td>$83,519.28</td></tr>
+            <tr><td>Robinhood<small>Brokerage and crypto, connected</small></td><td>USD</td><td>$32,574.49</td></tr>
+            <tr><td>Zerodha<small>Demat, added by hand</small></td><td>INR</td><td>&#8377;86,295 <span class="muted">&rarr; $909.04</span></td></tr>
+            <tr class="total"><td>Net worth</td><td>USD</td><td>$117,002.81</td></tr>
+          </table>
+        </div>
+        <div class="phones reveal">
+          <figure>
+            <div class="phone"><img src="/assets/app/accounts.webp" width="960" height="2087" loading="lazy" alt="Accounts grouped by country: United States with Fidelity and Robinhood, and India with Zerodha shown in dollars and rupees."></div>
+            <figcaption>Accounts, by country</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="split flip">
+        <div class="copy reveal">
+          <p class="label">Stock pages</p>
+          <h2>A chart that knows what time it is.</h2>
+          <p>During the trading day the line stops at <strong>now</strong>, on the exchange&rsquo;s own clock, instead of stretching across the screen. Drag to see any moment. Change the range and the line reshapes instead of blinking.</p>
+          <p>Bitcoin and other coins are priced as coins, around the clock. Shares in London, Mumbai or Toronto show in their own currency.</p>
+        </div>
+        <div class="phones reveal">
+          <figure>
+            <div class="phone"><img src="/assets/app/stock.webp" width="960" height="2087" loading="lazy" alt="NVIDIA at $221.30, up 2.23% today, with a day chart from the 9:30 open that stops at the current time, and the position of 60 shares."></div>
+            <figcaption>NVIDIA, mid-session</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="split">
+        <div class="copy reveal">
+          <p class="label">Markets</p>
+          <h2>The whole market, one pull away.</h2>
+          <p>Your watchlist sits on top. Pull up for the day underneath: the market&rsquo;s mood, gold, oil and Bitcoin, every sector at a glance, the biggest movers, earnings from companies you own, and what members of Congress have been trading.</p>
+        </div>
+        <div class="phones reveal">
+          <figure>
+            <div class="phone"><img src="/assets/app/markets.webp" width="960" height="2087" loading="lazy" alt="Markets: the S&amp;P 500, Nasdaq and Dow, a watchlist, and the Market today panel peeking up from the bottom."></div>
+            <figcaption>Watchlist</figcaption>
+          </figure>
+          <figure>
+            <div class="phone"><img src="/assets/app/market-today.webp" width="960" height="2087" loading="lazy" alt="Market today, pulled up: a steady market mood, gold, oil and Bitcoin, and every sector colored by how far it moved."></div>
+            <figcaption>Market today, pulled up</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="privacy">
+      <div class="privacy">
+        <div class="reveal">
+          <p class="label">Privacy</p>
+          <h2>Read-only, all the way down.</h2>
+          <div class="figure" id="demo">
+            <div class="top"><span>Net worth</span>
+              <button class="eye" type="button" aria-pressed="false" aria-label="Hide amounts">
+                <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.6 5.1A10.8 10.8 0 0 1 12 5c6.4 0 10 7 10 7a17.6 17.6 0 0 1-3.2 4.1M6.6 6.6C3.8 8.4 2 12 2 12s3.6 7 10 7a9.9 9.9 0 0 0 5.4-1.6M9.9 9.9a3 3 0 0 0 4.2 4.2M3 3l18 18"/></svg>
+              </button>
+            </div>
+            <div class="amount" aria-live="polite"><span class="sym">$</span>117,002<span class="cents">.81</span></div>
+            <div class="chg">+$1,291.48 +1.12%<span>today</span></div>
+            <p class="hint">Tap the eye. <strong style="color:var(--ink);font-weight:600">Hide amounts</strong> blurs your balances in one tap, for the train, the office or a shared screen. Prices stay visible.</p>
+          </div>
+        </div>
+        <ul class="promises reveal">
+          <li><h3>It can look. It can&rsquo;t touch.</h3><p>Stoxtox sees holdings and balances. It can&rsquo;t trade, move money or change anything at your broker.</p></li>
+          <li><h3>Your broker login stays with your broker</h3><p>You sign in on Plaid&rsquo;s screen or your broker&rsquo;s own. Your password never reaches us.</p></li>
+          <li><h3>Locked with Face ID</h3><p>Turn on Face ID lock and Stoxtox asks every time it opens. It hides in the app switcher, too.</p></li>
+          <li><h3>Yours to take, or delete</h3><p>Export your accounts and holdings as a spreadsheet whenever you like. Delete your account and it&rsquo;s gone from our servers.</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="close">
+      <div class="reveal">
+        <img src="/assets/mark.svg" alt="" width="72" height="72">
+        <h2>Coming soon to iPhone.</h2>
+        <p class="lede" style="margin:22px auto 0;text-align:center">Want in early? Email us and we&rsquo;ll send you a TestFlight invite.</p>
+        <div class="actions">
+          <a class="brass" href="mailto:co-founders@stoxtox.com?subject=Stoxtox%20early%20access">Get early access</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="row">
+      <span>&copy; <span id="y">2026</span> Stoxtox LLC</span>
+      <nav aria-label="Footer"><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="mailto:co-founders@stoxtox.com">Contact</a></nav>
+    </div>
+    <p class="fine">Stoxtox is read-only. It isn&rsquo;t a broker and doesn&rsquo;t give investment advice. Market data from Financial Modeling Prep. Broker connections by Plaid. <a href="https://logo.dev">Logos provided by Logo.dev</a>. Screens show a demo portfolio.</p>
+  </footer>
+</div>
+
+<script>
+// Sections settle in once as they arrive.
+const seen = new IntersectionObserver((entries) => {
+  for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); seen.unobserve(e.target) }
+}, { rootMargin: '0px 0px -12% 0px' });
+document.querySelectorAll('.reveal').forEach((el) => seen.observe(el));
+
+// The Hide amounts demo works like the app's eye button.
+const demo = document.getElementById('demo'), eye = demo.querySelector('.eye');
+eye.addEventListener('click', () => {
+  const hidden = demo.classList.toggle('hidden');
+  eye.setAttribute('aria-pressed', hidden);
+  eye.setAttribute('aria-label', hidden ? 'Show amounts' : 'Hide amounts');
+});
+document.getElementById('y').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
