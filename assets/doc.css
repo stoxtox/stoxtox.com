@@ -9,7 +9,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font:400 16.5px/1.7 "Jaka
 main{max-width:720px;margin:0 auto;padding:28px 20px 88px}
 header{display:flex;align-items:center;justify-content:space-between;height:56px;margin-bottom:48px}
 header .brand{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;font-weight:700;font-size:18px;letter-spacing:-.02em}
-header .brand img{width:26px;height:26px;border-radius:7px}
+header .brand img{width:21px;height:21px}
 header nav a{font-weight:500;font-size:14px;color:var(--muted);margin-left:20px;text-decoration:none}
 header nav a:hover{color:var(--ink)}
 h1{font-size:clamp(32px,5vw,44px);line-height:1.08;letter-spacing:-.035em;margin:0 0 12px}
