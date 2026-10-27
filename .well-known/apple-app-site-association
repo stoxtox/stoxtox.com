@@ -3,7 +3,8 @@
     "details": [
       {
         "appIDs": [
-          "96CZ7V5TC6.com.stoxtox.app"
+          "96CZ7V5TC6.com.stoxtox.app",
+          "ATK7WP6V3F.com.stoxtox.ios"
         ],
         "components": [
           {
@@ -15,6 +16,13 @@
           }
         ],
         "appID": "96CZ7V5TC6.com.stoxtox.app",
+        "paths": [
+          "/plaid/oauth",
+          "/plaid/oauth/*"
+        ]
+      },
+      {
+        "appID": "ATK7WP6V3F.com.stoxtox.ios",
         "paths": [
           "/plaid/oauth",
           "/plaid/oauth/*"
