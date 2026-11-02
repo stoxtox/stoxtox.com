@@ -260,20 +260,27 @@ section{padding:170px 0}
 .codes li b{color:var(--ink);font-weight:600}
 
 /* iPhone Duo: two pages when it opens */
-.fold{position:relative;padding:12px;border-radius:44px;
-  background:linear-gradient(160deg,#3a3c40,#141517 40%,#0d0e10);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),inset 0 0 0 3px #050506,var(--phone-shadow)}
-.fold .screens{position:relative;aspect-ratio:1800/1267;border-radius:33px;overflow:hidden;background:#0C0D0E}
-.fold .screens img{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .6s ease}
-.fold .screens img.on{opacity:1}
-.fold .screens::after{content:"";position:absolute;top:0;bottom:0;left:50%;width:2px;transform:translateX(-1px);pointer-events:none;background:linear-gradient(transparent,rgba(255,255,255,.07) 15%,rgba(255,255,255,.07) 85%,transparent)}
+.fold{position:relative;display:grid;grid-template-columns:1fr 1fr;perspective:2600px;--a:0deg;--k:0}
+.half{position:relative;padding:12px;background:linear-gradient(160deg,#3a3c40,#141517 40%,#0d0e10);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),inset 0 0 0 3px #050506,var(--phone-shadow)}
+.half.l{padding-right:0;border-radius:44px 0 0 44px;transform-origin:right center;transform:rotateY(var(--a))}
+.half.r{padding-left:0;border-radius:0 44px 44px 0;transform-origin:left center;transform:rotateY(calc(var(--a) * -1))}
+.win{position:relative;aspect-ratio:900/1267;overflow:hidden;background:#0C0D0E}
+.half.l .win{border-radius:33px 0 0 33px}.half.r .win{border-radius:0 33px 33px 0}
+.win img{position:absolute;top:0;width:200%;height:100%;max-width:none;opacity:0;transition:opacity .6s ease}
+.half.l .win img{left:0}.half.r .win img{left:-100%}
+.win img.on,.closed img.on{opacity:1}
+.win::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none}
+.half.l .win::after{background:linear-gradient(90deg,transparent 78%,rgba(0,0,0,calc(.08 + var(--k) * .5)))}
+.half.r .win::after{background:linear-gradient(270deg,transparent 78%,rgba(0,0,0,calc(.06 + var(--k) * .3)))}
 .tabs{display:flex;justify-content:center;gap:4px;margin:36px auto 0;padding:4px;border-radius:14px;background:var(--sunk);width:max-content;max-width:100%}
 .tabs button{border:0;background:transparent;padding:9px 16px;border-radius:10px;font-size:14px;font-weight:550;color:var(--muted);cursor:pointer;transition:background .2s,color .2s,box-shadow .2s}
 .tabs button[aria-pressed="true"]{background:var(--raised);color:var(--ink);box-shadow:var(--lift)}
-.duo-pair{display:grid;grid-template-columns:minmax(0,1fr) 230px;column-gap:48px;align-items:end;max-width:1200px;margin:80px auto 0}
+.duo-pair{display:grid;grid-template-columns:minmax(0,1fr) 270px;column-gap:56px;align-items:end;max-width:1200px;margin:80px auto 0}
 .shut{align-self:start;margin:36px 0 0;text-align:center;font-size:14.5px;line-height:1.45;color:var(--muted)}
 .shut b{display:block;color:var(--ink);font-weight:600}
 .closed{width:100%;padding:8px;border-radius:30px;background:linear-gradient(160deg,#3a3c40,#141517 40%,#0d0e10);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),inset 0 0 0 3px #050506,0 30px 60px -30px rgba(0,0,0,.7)}
-.closed img{border-radius:23px;aspect-ratio:640/932;width:100%;height:auto}
+.closed .win{aspect-ratio:640/932;border-radius:23px}
+.closed img{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .6s ease}
 
 /* Plus */
 .plus{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:88px;align-items:center}
@@ -335,7 +342,7 @@ footer .fine a{color:var(--muted)}
   .js .chart .you{stroke-dashoffset:0;transition:none}.js .chart .area{opacity:1;transition:none}
   .js .statement .w{color:var(--ink)}.js .statement .w.g{color:var(--brass)}
   .brass::after,.dot{animation:none}
-  .pin .screens img,.fold .screens img{transition:none}
+  .pin .screens img,.win img,.closed img{transition:none}
 }
 
 /* Tablets */
@@ -381,7 +388,8 @@ footer .fine a{color:var(--muted)}
   .perks{columns:1}
   .plan{padding:22px}
   .plan .price{font-size:26px}
-  .fold{padding:6px;border-radius:24px}.duo-pair{margin-top:56px}.fold .screens{border-radius:19px}
+  .half{padding:6px}.half.l{padding-right:0;border-radius:24px 0 0 24px}.half.r{padding-left:0;border-radius:0 24px 24px 0}
+  .half.l .win{border-radius:19px 0 0 19px}.half.r .win{border-radius:0 19px 19px 0}.duo-pair{margin-top:56px}
   .tabs button{padding:8px 11px;font-size:13px}
   .duo-pair .closed{width:180px}
   .close{padding:130px 0 110px}
@@ -572,15 +580,26 @@ footer .fine a{color:var(--muted)}
         <p class="body">On iPhone Duo, Stoxtox spreads across both screens. The headline on one side, the detail on the other.</p>
       </div>
       <div class="duo-pair reveal d1">
-        <div class="fold">
-          <div class="screens" id="duoScreens">
+        <div class="fold" id="fold">
+          <div class="half l"><div class="win" data-duo>
             <img class="on" src="/assets/app/v3/duo-home.webp" width="1800" height="1267" loading="lazy" alt="Stoxtox open on iPhone Duo: net worth on the left page, what it's made of and news on the right.">
             <img src="/assets/app/v3/duo-inside.webp" width="1800" height="1267" loading="lazy" alt="Inside Apple on iPhone Duo: the $100 grid on the left page, what it sells on the right.">
             <img src="/assets/app/v3/duo-xray.webp" width="1800" height="1267" loading="lazy" alt="X-ray on iPhone Duo: everything you own on the left page, fund fees and sectors on the right.">
             <img src="/assets/app/v3/duo-performance.webp" width="1800" height="1267" loading="lazy" alt="Performance on iPhone Duo across two pages.">
-          </div>
+          </div></div>
+          <div class="half r" aria-hidden="true"><div class="win" data-duo>
+            <img class="on" src="/assets/app/v3/duo-home.webp" width="1800" height="1267" loading="lazy" alt="">
+            <img src="/assets/app/v3/duo-inside.webp" width="1800" height="1267" loading="lazy" alt="">
+            <img src="/assets/app/v3/duo-xray.webp" width="1800" height="1267" loading="lazy" alt="">
+            <img src="/assets/app/v3/duo-performance.webp" width="1800" height="1267" loading="lazy" alt="">
+          </div></div>
         </div>
-        <div class="closed"><img src="/assets/app/v3/duo-closed-home.webp" width="640" height="932" loading="lazy" alt="Stoxtox on iPhone Duo's closed screen, showing net worth."></div>
+        <div class="closed" aria-label="The same screen on iPhone Duo closed" role="img"><div class="win" data-duo>
+            <img class="on" src="/assets/app/v3/duo-closed-home.webp" width="640" height="932" loading="lazy" alt="">
+            <img src="/assets/app/v3/duo-closed-inside.webp" width="640" height="932" loading="lazy" alt="">
+            <img src="/assets/app/v3/duo-closed-xray.webp" width="640" height="932" loading="lazy" alt="">
+            <img src="/assets/app/v3/duo-closed-performance.webp" width="640" height="932" loading="lazy" alt="">
+        </div></div>
         <div class="tabs" role="group" aria-label="Duo screens">
           <button type="button" aria-pressed="true" data-i="0">Home</button>
           <button type="button" aria-pressed="false" data-i="1">Inside</button>
@@ -789,22 +808,36 @@ const counter = new IntersectionObserver((entries) => {
 }, { threshold: .6 });
 document.querySelectorAll('.count, .count-int').forEach((el) => counter.observe(el));
 
-// Duo screens: tap a tab, or let them turn by themselves until you do.
-const screens = [...document.querySelectorAll('#duoScreens img')], tabs = [...document.querySelectorAll('.tabs button')];
+// Duo screens: tap a tab, or let them turn by themselves until you do. Open and closed show the same screen.
+const duo = [...document.querySelectorAll('[data-duo]')].map((g) => [...g.querySelectorAll('img')]);
+const tabs = [...document.querySelectorAll('.tabs button')], fold = document.getElementById('fold');
 let shown = 0, timer = null, touched = false;
 const show = (i) => {
   shown = i;
-  screens.forEach((s, k) => s.classList.toggle('on', k === i));
+  duo.forEach((g) => g.forEach((s, k) => s.classList.toggle('on', k === i)));
   tabs.forEach((t, k) => t.setAttribute('aria-pressed', k === i));
 };
 tabs.forEach((t) => t.addEventListener('click', () => { touched = true; clearInterval(timer); timer = null; show(+t.dataset.i) }));
 if (!still) {
   new IntersectionObserver((entries) => {
     for (const e of entries) {
-      if (e.isIntersecting && timer === null && !touched) timer = setInterval(() => show((shown + 1) % screens.length), 3800);
+      if (e.isIntersecting && timer === null && !touched) timer = setInterval(() => show((shown + 1) % duo[0].length), 3800);
       else if (!e.isIntersecting && timer) { clearInterval(timer); timer = null }
     }
-  }, { threshold: .4 }).observe(document.getElementById('duoScreens'));
+  }, { threshold: .4 }).observe(fold);
+
+  // It opens as it comes up the screen: folded to a V at the bottom, flat by the time it's in view.
+  let folding = false;
+  const unfold = () => {
+    folding = false;
+    const r = fold.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > innerHeight) return;
+    const p = Math.min(1, Math.max(0, (innerHeight - r.top) / (innerHeight * .8))), k = Math.pow(1 - p, 2);
+    fold.style.setProperty('--a', `${(k * 38).toFixed(2)}deg`);
+    fold.style.setProperty('--k', k.toFixed(3));
+  };
+  addEventListener('scroll', () => { if (!folding) { folding = true; requestAnimationFrame(unfold) } }, { passive: true });
+  unfold();
 }
 
 // The Hide amounts demo works like the app's eye button.
