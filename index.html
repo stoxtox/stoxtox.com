@@ -285,8 +285,9 @@ section{padding:128px 0}
 /* Plus */
 .plus{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:88px;align-items:center}
 .seal{display:block;width:76px;height:76px;margin-bottom:30px;filter:drop-shadow(0 16px 26px rgba(217,174,82,.4))}
-.perks{margin:34px 0 0;padding:0;list-style:none;columns:2;column-gap:32px}
+.perks{margin:34px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;column-gap:32px}
 .perks li{break-inside:avoid;padding:12px 0;border-top:1px solid var(--line);font-size:16px}
+.perks-note{margin:18px 0 0;font-size:13.5px;color:var(--faint);max-width:34em}
 .plans{display:grid;gap:16px}
 .trial{margin:0 0 6px;font-size:15px;font-weight:600;color:var(--brass)}
 .plan{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:26px 28px;border-radius:24px;background:var(--raised);box-shadow:var(--lift)}
@@ -385,7 +386,7 @@ footer .fine a{color:var(--muted)}
   .rows b{font-size:15px}.rows small{font-size:12.5px}
   .hundred{gap:4px}
   .tree{height:210px}
-  .perks{columns:1}
+  .perks{grid-template-columns:1fr}
   .plan{padding:22px}
   .plan .price{font-size:26px}
   .half{padding:6px}.half.l{padding-right:0;border-radius:24px 0 0 24px}.half.r{padding-left:0;border-radius:0 24px 24px 0}
@@ -623,12 +624,14 @@ footer .fine a{color:var(--muted)}
         <ul class="perks">
           <li>Broker sync for US accounts</li>
           <li>Performance against the market</li>
+          <li>Live prices, trade by trade</li>
           <li>Every chapter inside a company</li>
           <li>X-ray of your funds</li>
           <li>Dividend forecasts</li>
           <li>Unlimited, smarter alerts</li>
           <li>A monthly card to keep</li>
         </ul>
+        <p class="perks-note">Live during US market hours and for crypto. Some exchanges send prices with a delay.</p>
       </div>
       <div class="plans reveal d1">
         <p class="trial">3 months free on either plan</p>
