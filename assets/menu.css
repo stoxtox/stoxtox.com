@@ -1,0 +1,48 @@
+/* The phone menu (menu.js): the header's links, folded behind a button whose two lines cross into the Stoxtox X.
+   It opens as a page of its own under the bar: solid, the brand's type, nothing frosted. */
+.menu-btn{display:none}
+.sheet{display:none}
+
+@media (max-width:620px){
+  .has-menu .nav ul li:not(:has(.pill)){display:none}
+  .has-menu .nav ul{gap:6px;margin-left:auto;margin-right:10px}
+  .menu-btn{position:relative;display:block;width:44px;height:44px;margin-right:-11px;padding:0;border:0;background:none;color:var(--ink);cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .menu-btn i{position:absolute;left:11px;top:50%;height:1.75px;border-radius:2px;background:currentColor;transform-origin:center;
+    transition:transform .45s var(--ease),width .45s var(--ease),left .45s var(--ease),background-color .3s ease}
+  .menu-btn i:first-child{width:22px;transform:translateY(-4.5px)}
+  .menu-btn i:last-child{width:14px;left:19px;transform:translateY(3.5px)}
+  /* Open: the two lines cross, a little taller than wide, like the mark, and turn gold */
+  .menu-open .menu-btn i{width:22px;left:11px;background:var(--brass)}
+  .menu-open .menu-btn i:first-child{transform:rotate(52deg)}
+  .menu-open .menu-btn i:last-child{transform:rotate(-52deg)}
+
+  html.menu-open .bar{background:var(--paper);transform:none}
+  /* The menu has its own, wider button */
+  .nav .pill{transition:opacity .2s ease}
+  .menu-open .nav .pill{opacity:0;pointer-events:none}
+  .sheet{display:block;position:fixed;inset:60px 0 0;z-index:9;overflow-y:auto;overscroll-behavior:contain;
+    background:var(--paper);padding:8px var(--gutter) calc(32px + env(safe-area-inset-bottom));
+    visibility:hidden;opacity:0;transition:opacity .25s ease,visibility 0s linear .25s}
+  .menu-open .sheet{visibility:visible;opacity:1;transition:opacity .25s ease}
+  .sheet ol{list-style:none;margin:0;padding:0}
+  .sheet li{opacity:0;transform:translateY(12px);transition:opacity .45s var(--ease),transform .6s var(--ease);transition-delay:calc(var(--i) * 45ms + 40ms)}
+  .menu-open .sheet li{opacity:1;transform:none}
+  .sheet li + li{border-top:1px solid var(--line)}
+  .sheet .go{display:block;padding:18px 0 17px;text-decoration:none}
+  .sheet .go b{display:flex;align-items:center;gap:12px;font-size:30px;font-weight:650;letter-spacing:-.035em;line-height:1.15;color:var(--ink)}
+  .sheet .go span{display:block;margin-top:5px;font-size:14.5px;line-height:1.4;color:var(--muted)}
+  .sheet .go[aria-current] b::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--brass)}
+  .sheet .go:active b{color:var(--brass)}
+  .sheet .end{margin-top:28px;opacity:0;transition:opacity .5s ease .3s}
+  .menu-open .sheet .end{opacity:1}
+  .sheet .cta{display:flex;align-items:center;justify-content:center;height:56px;border-radius:16px;background:#D9AE52;color:#1A1405;font-size:16.5px;font-weight:650;text-decoration:none;letter-spacing:-.01em}
+  .sheet .cta + small{display:block;margin-top:12px;text-align:center;font-size:13.5px;color:var(--muted)}
+  .sheet .foot{margin:28px 0 0;font-size:13.5px;color:var(--faint)}
+  .sheet .foot a{color:var(--muted);text-decoration:none}
+  html.menu-open,html.menu-open body{overflow:hidden}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .menu-btn i,.sheet,.sheet li,.sheet .end{transition:none!important;transition-delay:0s!important}
+  .sheet li{transform:none}
+}
