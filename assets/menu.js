@@ -11,7 +11,7 @@
     '#inside': 'Any company, in plain words',
     '#xray': 'What your funds really own',
     '#performance': 'How you did against the market',
-    '#plus': 'Free for 3 months, then $49.99 a year',
+    '#plus': 'Broker and bank sync, 3 months free',
     '#privacy': 'Your numbers stay yours',
     Home: 'Everything you own, one number',
     Help: 'Answers, and how to do things',
@@ -45,7 +45,7 @@
     return `<li style="--i:${i}"><a class="go" href="${a.getAttribute('href')}"${here}><b>${name}</b>${note ? `<span>${note}</span>` : ''}</a></li>`;
   }).join('');
   sheet.innerHTML = `<nav aria-label="Menu"><ol>${items}</ol><div class="end">` +
-    (cta ? `<a class="cta" href="${cta.getAttribute('href')}">${cta.textContent.trim()}</a><small>App Store coming soon</small>` : '') +
+    (cta ? `<a class="cta" href="${cta.getAttribute('href')}">${cta.textContent.trim()}</a><small>Free on the App Store</small>` : '') +
     // Pages with a Contact row already show the address there.
     `<p class="foot">&copy; 2026 Stoxtox LLC${links.some((a) => a.textContent.trim() === 'Contact') ? '' : ' &middot; <a href="mailto:support@stoxtox.com">support@stoxtox.com</a>'}</p></div></nav>`;
   document.body.appendChild(sheet);
